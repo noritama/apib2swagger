@@ -77,23 +77,24 @@ var swaggerPaths = function (paths, tag, resource) {
         var action = resource.actions[k];
         if (!action.attributes.uriTemplate) {
             if (!paths[pathName]) paths[pathName] = {};
-            paths[pathName][action.method.toLowerCase()] = swaggerOperation(pathParams, uriTemplate, action, tag);
+            paths[pathName][action.method.toLowerCase()] = swaggerOperation(pathParams, uriTemplate, action, tag, resource.name);
             continue;
         }
         var attrUriTemplate = UriTemplate.parse(action.attributes.uriTemplate),
             attrPathName = swaggerPathName(attrUriTemplate);
         if (!paths[attrPathName]) paths[attrPathName] = {};
-        paths[attrPathName][action.method.toLowerCase()] = swaggerOperation([], attrUriTemplate, action, tag);
+        paths[attrPathName][action.method.toLowerCase()] = swaggerOperation([], attrUriTemplate, action, tag, resource.name);
     }
 };
 
-var swaggerOperation = function (pathParams, uriTemplate, action, tag) {
+var swaggerOperation = function (pathParams, uriTemplate, action, tag, resourceName) {
     var operation = {
         'responses': swaggerResponses(action.examples),
         'summary': action.name,
         'description': action.description,
         'tags': tag ? [tag] : [],
-        'parameters': pathParams.concat(swaggerParameters(action.parameters, uriTemplate))
+        'parameters': pathParams.concat(swaggerParameters(action.parameters, uriTemplate)),
+        'operationId': `${resourceName}#{action.name}`
     };
     var produces = {}, producesExist = false;
     for (var key in operation.responses) {
