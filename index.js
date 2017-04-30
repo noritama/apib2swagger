@@ -3,7 +3,18 @@ var url = require('url'),
     drafter = require('drafter.js'),
     UriTemplate = require('uritemplate');
 
-var apib2swagger = module.exports.convertParsed = function(apib) {
+function genOpts(options) {
+    options = options || {};
+
+    options.operation = options.operation || {};
+    options.operation.separator = options.operation.separator || '#';
+
+    return options;
+}
+
+var apib2swagger = module.exports.convertParsed = function(apib, options) {
+    options = genOpts(options);
+
     //console.log(JSON.stringify(apib, null, 4));
     var swagger = {};
     swagger.swagger = '2.0';
@@ -32,7 +43,7 @@ var apib2swagger = module.exports.convertParsed = function(apib) {
             if (content.element === 'resource') {
                 // (name, description) in Resource section are discarded
                 swaggerDefinitions(swagger.definitions, content);
-                swaggerPaths(swagger.paths, groupName, content);
+                swaggerPaths(swagger.paths, groupName, content, options);
             } else if (content.element === 'copy') {
             } else if (content.element === 'dataStructure') {
                 swagger.definitions[content.content[0].meta.id] = jsonSchemaFromMSON(content);
@@ -68,7 +79,7 @@ var swaggerDefinitions = function (definitions, resource) {
     }
 };
 
-var swaggerPaths = function (paths, tag, resource) {
+var swaggerPaths = function (paths, tag, resource, options) {
     var uriTemplate = UriTemplate.parse(resource.uriTemplate),
         pathName = swaggerPathName(uriTemplate);
     //path.parameters = swaggerParameters(resource.parameters, uriTemplate);
@@ -77,24 +88,24 @@ var swaggerPaths = function (paths, tag, resource) {
         var action = resource.actions[k];
         if (!action.attributes.uriTemplate) {
             if (!paths[pathName]) paths[pathName] = {};
-            paths[pathName][action.method.toLowerCase()] = swaggerOperation(pathParams, uriTemplate, action, tag, resource.name);
+            paths[pathName][action.method.toLowerCase()] = swaggerOperation(pathParams, uriTemplate, action, tag, resource.name, options);
             continue;
         }
         var attrUriTemplate = UriTemplate.parse(action.attributes.uriTemplate),
             attrPathName = swaggerPathName(attrUriTemplate);
         if (!paths[attrPathName]) paths[attrPathName] = {};
-        paths[attrPathName][action.method.toLowerCase()] = swaggerOperation([], attrUriTemplate, action, tag, resource.name);
+        paths[attrPathName][action.method.toLowerCase()] = swaggerOperation([], attrUriTemplate, action, tag, resource.name, options);
     }
 };
 
-var swaggerOperation = function (pathParams, uriTemplate, action, tag, resourceName) {
+var swaggerOperation = function (pathParams, uriTemplate, action, tag, resourceName, options) {
     var operation = {
         'responses': swaggerResponses(action.examples),
         'summary': action.name,
         'description': action.description,
         'tags': tag ? [tag] : [],
         'parameters': pathParams.concat(swaggerParameters(action.parameters, uriTemplate)),
-        'operationId': `${resourceName}#{action.name}`
+        'operationId': `${resourceName}${options.operation.separator}${action.name}`
     };
     var produces = {}, producesExist = false;
     for (var key in operation.responses) {
@@ -348,14 +359,18 @@ exports.noconvert = function (data, callback) {
     }
 };
 
-exports.convert = function (data, callback) {
+exports.convert = function (data, options, callback) {
+    if (!callback) {
+      callback = options;
+      options = {};
+    }
     try {
         var result = drafter.parse(data, {type: 'ast'});
         //for (var i = 0; i < result.warnings.length; i++) {
         //    var warn = result.warnings[i];
         //    console.log(warn);
         //}
-        var swagger = apib2swagger(result.ast);
+        var swagger = apib2swagger(result.ast, options);
         return callback(null, {swagger: swagger});
     }
     catch (error) {
