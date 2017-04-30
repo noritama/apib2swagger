@@ -20,7 +20,8 @@
         "tags": [
           "Quick start"
         ],
-        "parameters": []
+        "parameters": [],
+        "operationId": "Create message#Create message"
       }
     },
     "/tasks": {
@@ -37,7 +38,8 @@
         "tags": [
           "Quick start"
         ],
-        "parameters": []
+        "parameters": [],
+        "operationId": "Create a new task#Create a new task"
       }
     }
   },

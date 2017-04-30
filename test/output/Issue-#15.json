@@ -46,6 +46,7 @@
           "Settings"
         ],
         "parameters": [],
+        "operationId": "Server Settings#Get Server Settings",
         "produces": [
           "application/json"
         ]
@@ -87,6 +88,7 @@
           "Users"
         ],
         "parameters": [],
+        "operationId": "Users#List all users",
         "produces": [
           "application/json"
         ]
@@ -199,6 +201,7 @@
             "type": "string"
           }
         ],
+        "operationId": "User Detail#Get a specific user",
         "produces": [
           "application/json"
         ]

@@ -34,6 +34,7 @@
             "type": "number"
           }
         ],
+        "operationId": "My Message#Retrieve a Message",
         "produces": [
           "application/json"
         ]
@@ -59,7 +60,8 @@
             "required": true,
             "type": "number"
           }
-        ]
+        ],
+        "operationId": "My Message#Update a Message"
       }
     },
     "/messages": {
@@ -101,6 +103,7 @@
             "default": 20
           }
         ],
+        "operationId": "All My Messages#Retrieve all Messages",
         "produces": [
           "application/json"
         ]

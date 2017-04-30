@@ -40,7 +40,8 @@
         "tags": [
           "Coupons"
         ],
-        "parameters": []
+        "parameters": [],
+        "operationId": "Coupon#Retrieve a Coupon"
       }
     }
   },

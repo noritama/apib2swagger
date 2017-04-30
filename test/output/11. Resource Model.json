@@ -36,6 +36,7 @@
           "Messages"
         ],
         "parameters": [],
+        "operationId": "My Message#Retrieve a Message",
         "produces": [
           "application/vnd.siren+json"
         ]
@@ -53,7 +54,8 @@
         "tags": [
           "Messages"
         ],
-        "parameters": []
+        "parameters": [],
+        "operationId": "My Message#Update a Message"
       }
     }
   },

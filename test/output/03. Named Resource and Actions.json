@@ -21,6 +21,7 @@
         "description": "Now this is informative! No extra explanation needed here. This action clearly retrieves the message.",
         "tags": [],
         "parameters": [],
+        "operationId": "My Message#Retrieve a Message",
         "produces": [
           "text/plain"
         ]
@@ -36,7 +37,8 @@
         "summary": "Update a Message",
         "description": "`Update a message` - nice and simple naming is the best way to go.",
         "tags": [],
-        "parameters": []
+        "parameters": [],
+        "operationId": "My Message#Update a Message"
       }
     }
   },

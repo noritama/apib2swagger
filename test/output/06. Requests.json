@@ -25,6 +25,7 @@
           "Messages"
         ],
         "parameters": [],
+        "operationId": "My Message#Retrieve a Message",
         "produces": [
           "application/json"
         ]
@@ -42,7 +43,8 @@
         "tags": [
           "Messages"
         ],
-        "parameters": []
+        "parameters": [],
+        "operationId": "My Message#Update a Message"
       }
     }
   },

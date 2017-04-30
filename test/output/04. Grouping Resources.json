@@ -23,6 +23,7 @@
           "Messages"
         ],
         "parameters": [],
+        "operationId": "My Message#Retrieve a Message",
         "produces": [
           "text/plain"
         ]
@@ -40,7 +41,8 @@
         "tags": [
           "Messages"
         ],
-        "parameters": []
+        "parameters": [],
+        "operationId": "My Message#Update a Message"
       }
     }
   },

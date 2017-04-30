@@ -30,3 +30,5 @@ node_modules
 # Swagger server
 swagger-ui-master/*
 swagger-ui-master.tar.gz
+
+test/input

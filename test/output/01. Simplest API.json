@@ -21,6 +21,7 @@
         "description": "",
         "tags": [],
         "parameters": [],
+        "operationId": "#",
         "produces": [
           "text/plain"
         ]

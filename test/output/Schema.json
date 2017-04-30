@@ -37,10 +37,13 @@
                   "type": "string"
                 }
               },
-              "required": ["prop1"]
+              "required": [
+                "prop1"
+              ]
             }
           }
-        ]
+        ],
+        "operationId": "Some resource#Some resource"
       }
     },
     "/some/resource/2": {
@@ -76,7 +79,8 @@
               }
             }
           }
-        ]
+        ],
+        "operationId": "Some resource 2#"
       }
     }
   },
